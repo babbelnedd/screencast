@@ -1,9 +1,12 @@
 #!/bin/bash
-
-     tmpfile='/home/lsc/.scripts/tmp/screencast'
-     files='/home/lsc/.scripts/tmp/screencast_files'
+     DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+     tmp="$DIR/tmp"
+     cfgsrc="$DIR/config"
+     tmpfile="$tmp/screencast"
+     files="$tmp/screencast_files"
+     mkdir "$tmp/"
+     source $cfgsrc
      file=$(sed -n '2p' $tmpfile)
-	 output='/home/lsc/Dropbox/Videos/Screencasts/'
 
       # Close the screencasting process gracefully
       # ==========================================
@@ -15,7 +18,7 @@
      notify-send -t 3000  "$KEYBOARDSTOP : Screencast finished   :-)"
  
  	# mege files
-	cmd="mkvmerge -o $output"
+	cmd="mkvmerge -o $output/"
 	cmd+=$file
 	cmd+='.mkv '
 	n=0
@@ -25,7 +28,7 @@
 	if [ $n -gt 1 ]; then
 	cmd+="+"
 	fi
-    cmd+="$output$line"
+    cmd+="$output/$line"
 	cmd+='.mkv '
 	done < $files
 
@@ -36,7 +39,7 @@
 	# delete part files
 	while read line
 	do
-	rm -f "$output$line.mkv"
+	rm -f "$output/$line.mkv"
 	done < $files
 
 	rm -f "$files"
