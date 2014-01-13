@@ -8,7 +8,7 @@ if [ $? = 0 ];then
 bash $DIR/screencast.sh
 else
 # 'no'
-notify-send -t 6000 "Screencast stopped"
+bash $DIR/screencast_stop.sh
 fi
 
 #killall key-mon
