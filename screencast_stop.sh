@@ -45,6 +45,15 @@
 	rm -f "$files"
     
 	# open thunar to show video
-	thunar $output
+	o_name=`basename $output`
+	echo $o_name
+	echo $output
+	r=`xdotool search --name "$o_name"`
+	if [ $r ];
+	then
+		xdotool windowactivate $r
+	else
+		thunar $output
+	fi
     #killall key-mon
       # ==========================================
